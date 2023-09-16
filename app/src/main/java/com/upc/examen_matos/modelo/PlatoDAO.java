@@ -2,10 +2,15 @@ package com.upc.examen_matos.modelo;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.upc.examen_matos.entidades.Plato;
 import com.upc.examen_matos.util.PlatoDB;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlatoDAO {
     SQLiteDatabase db;
@@ -45,5 +50,28 @@ public class PlatoDAO {
         }
 
         return respuesta;
+    }
+
+    public List<Plato> listarPlatos(){
+        List<Plato> platos = new ArrayList<>();
+
+        try {
+            Cursor c = db.rawQuery("SELECT * FROM platos;", null);
+            while (c.moveToNext()){
+                platos.add(new Plato(
+                        c.getInt(0),
+                        c.getString(1),
+                        c.getString(2),
+                        c.getString(3),
+                        c.getDouble(4),
+                        c.getInt(5),
+                        c.getString(6)
+                ));
+            }
+        } catch (Exception e) {
+            Log.d("==>", e.toString());
+        }
+
+        return platos;
     }
 }

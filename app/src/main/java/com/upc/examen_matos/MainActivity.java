@@ -59,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
         ventana.setTitle("Mensaje informativo");
         ventana.setMessage(mensaje);
         ventana.setPositiveButton("Aceptar", (dialogInterface, which) -> {
-            /*Intent intent = new Intent(this, ListarActivity.class);
-            startActivity(intent);*/
+            Intent intent = new Intent(this, ListarActivity.class);
+            startActivity(intent);
         });
         ventana.create().show();
     }
