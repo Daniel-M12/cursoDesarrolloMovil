@@ -74,4 +74,31 @@ public class PlatoDAO {
 
         return platos;
     }
+
+    public String editarPlato(Plato plato){
+        String respuesta = "";
+
+        try {
+            ContentValues values = new ContentValues();
+            values.put("nombre",plato.getNombre());
+            values.put("categoria",plato.getCategoria());
+            values.put("observaciones",plato.getObservaciones());
+            values.put("precio",plato.getPrecio());
+            values.put("cantidad",plato.getCantidad());
+            values.put("fechaPedido", plato.getFechaPedido());
+
+            long r = db.update("platos", values, "id=" + plato.getId(), null);
+
+            if (r == -1){
+                respuesta = "Error al modificar plato";
+            } else {
+                respuesta = "Se modificó correctamente";
+            }
+
+        } catch (Exception e) {
+            respuesta = "Ocurrió un error al modificar: " + e.getMessage();
+        }
+
+        return respuesta;
+    }
 }

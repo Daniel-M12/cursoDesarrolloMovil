@@ -17,6 +17,9 @@ public class MainActivity extends AppCompatActivity {
     Button btnRegistrar;
     EditText boxNombre, boxCategoria, boxPrecio, boxCantidad, boxObservaciones, boxFecha;
     Plato plato;
+    int codigo;
+
+    boolean esNuevoRegistro = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +31,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void verificarSiVieneDatos() {
-
+        if (getIntent().hasExtra("var_id")){
+            esNuevoRegistro = false;
+            this.codigo = Integer.parseInt(getIntent().getStringExtra("var_id"));
+            this.boxNombre.setText(getIntent().getStringExtra("var_nombre"));
+            this.boxCategoria.setText(getIntent().getStringExtra("var_categoria"));
+            this.boxPrecio.setText(getIntent().getStringExtra("var_precio"));
+            this.boxCantidad.setText(getIntent().getStringExtra("var_cantidad"));
+            this.boxObservaciones.setText(getIntent().getStringExtra("var_observacion"));
+            this.boxFecha.setText(getIntent().getStringExtra("var_fecha"));
+        }
     }
 
     private void asignarReferencias() {
@@ -47,7 +59,11 @@ public class MainActivity extends AppCompatActivity {
 
                 String mensaje = "";
 
-                mensaje = platoDAO.registrarPlato(this.plato);
+                if (esNuevoRegistro){
+                    mensaje = platoDAO.registrarPlato(this.plato);
+                } else {
+                    mensaje = platoDAO.editarPlato(this.plato);
+                }
 
                 mostrarMensaje(mensaje);
             }
@@ -101,10 +117,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (valida) {
-            plato = new Plato(nombre, categoria,observaciones,
-                    Double.parseDouble(precio),
-                    Integer.parseInt(cantidad),
-                    fecha);
+            if (esNuevoRegistro){
+                // Para registro
+                plato = new Plato(nombre, categoria,observaciones,
+                        Double.parseDouble(precio),
+                        Integer.parseInt(cantidad),
+                        fecha);
+            } else {
+                // Para actualización
+                plato = new Plato(codigo, nombre, categoria,observaciones,
+                        Double.parseDouble(precio),
+                        Integer.parseInt(cantidad),
+                        fecha);
+            }
+
         }
 
         return  valida;

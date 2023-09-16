@@ -44,7 +44,15 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MiViewHolder> {
         holder.filaObservacion.setText(platos.get(position).getObservaciones() + "");
 
         holder.btnEditar.setOnClickListener(view -> {
-            mostrarMensaje("Editar presionado");
+            Intent intent = new Intent(contexto, MainActivity.class);
+            intent.putExtra("var_id", platos.get(position).getId() + "");
+            intent.putExtra("var_nombre",platos.get(position).getNombre() + "");
+            intent.putExtra("var_categoria",platos.get(position).getCategoria() + "");
+            intent.putExtra("var_precio",platos.get(position).getPrecio() + "");
+            intent.putExtra("var_cantidad",platos.get(position).getCantidad() + "");
+            intent.putExtra("var_fecha",platos.get(position).getFechaPedido() + "");
+            intent.putExtra("var_observacion",platos.get(position).getObservaciones() + "");
+            contexto.startActivity(intent);
         });
 
         holder.btnEliminar.setOnClickListener(view -> {
