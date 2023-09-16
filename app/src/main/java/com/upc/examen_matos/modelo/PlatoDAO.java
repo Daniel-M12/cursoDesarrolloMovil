@@ -101,4 +101,24 @@ public class PlatoDAO {
 
         return respuesta;
     }
+
+    public String eliminarPlato(int id){
+        String respuesta= "";
+
+        try {
+
+            long r = db.delete("platos", "id=" + id, null);
+
+            if (r == -1){
+                respuesta = "Error al eliminar plato";
+            } else {
+                respuesta = "Se eliminó correctamente";
+            }
+
+        } catch (Exception e) {
+            respuesta = "Ocurrió un error al eliminar: " + e.getMessage();
+        }
+
+        return respuesta;
+    }
 }

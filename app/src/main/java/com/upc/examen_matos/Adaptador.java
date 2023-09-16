@@ -13,6 +13,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.upc.examen_matos.entidades.Plato;
+import com.upc.examen_matos.modelo.PlatoDAO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +57,17 @@ public class Adaptador extends RecyclerView.Adapter<Adaptador.MiViewHolder> {
         });
 
         holder.btnEliminar.setOnClickListener(view -> {
-            mostrarMensaje("Eliminar presionado");
+            AlertDialog.Builder ventana = new AlertDialog.Builder(contexto);
+            ventana.setTitle("Mensaje informativo");
+            ventana.setMessage("¿Desea eliminar el plato?");
+            ventana.setPositiveButton("Aceptar", (dialogInterface, which) -> {
+                PlatoDAO platoDAO = new PlatoDAO(contexto);
+                platoDAO.permisoDB();
+                String mensaje = platoDAO.eliminarPlato(platos.get(position).getId());
+                mostrarMensaje(mensaje);
+            });
+            ventana.setNegativeButton("Cancelar", null);
+            ventana.create().show();
         });
     }
 
