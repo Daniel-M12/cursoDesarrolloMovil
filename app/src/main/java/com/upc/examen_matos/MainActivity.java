@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.upc.examen_matos.entidades.Plato;
 import com.upc.examen_matos.modelo.PlatoDAO;
@@ -16,6 +17,7 @@ import java.time.LocalDate;
 public class MainActivity extends AppCompatActivity {
     Button btnRegistrar;
     EditText boxNombre, boxCategoria, boxPrecio, boxCantidad, boxObservaciones, boxFecha;
+    TextView txtTitulo;
     Plato plato;
     int codigo;
 
@@ -40,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
             this.boxCantidad.setText(getIntent().getStringExtra("var_cantidad"));
             this.boxObservaciones.setText(getIntent().getStringExtra("var_observacion"));
             this.boxFecha.setText(getIntent().getStringExtra("var_fecha"));
+
+            btnRegistrar.setText("Actualizar plato");
+            txtTitulo.setText("Actualizar plato existente");
         }
     }
 
@@ -51,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         boxCantidad = findViewById(R.id.boxCantidad);
         boxObservaciones = findViewById(R.id.boxObservaciones);
         boxFecha = findViewById(R.id.boxFecha);
+        txtTitulo = findViewById(R.id.txtTitulo);
 
         btnRegistrar.setOnClickListener(view -> {
             if (capturarDatos()){
