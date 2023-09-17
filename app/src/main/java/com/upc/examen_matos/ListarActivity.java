@@ -22,6 +22,7 @@ public class ListarActivity extends AppCompatActivity {
     FloatingActionButton btnAgregar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listar);
         asignarReferencias();
